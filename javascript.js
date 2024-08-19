@@ -1,96 +1,94 @@
 function getComputerChoice () {
-
-let randomNumber = Math.round(Math.random()* 3);
-
+let randomNumber = Math.floor(Math.random()* 3);
 //switch case statement to return either rock or scissor or paper
 switch(randomNumber){
 case 0:
 return 'paper';
 break;
-
 case 1:
 return 'rock';
 break;
-
 case 2:
 return 'scissor';
-
 } 
-
 }
+
 
 
 //userInput
 
 function getHumanChoice() {
-    /*let userInput = prompt("Enter your choice (rock, paper, or scissors):").toLowerCase();
-*/
-userInput="rock";
-
+  let userInput = prompt("Enter your choice (rock, paper, or scissors):");
+        
     while (true) {
-        if (userInput === "rock" || userInput === "paper" || userInput === "scissors") {
+      if (userInput === null) {
+        // Handle null input here, for example, return null or a default value
+        return null;
+      }
+  
+      userInput = userInput.toLowerCase();
+
+        if (userInput === "rock" || userInput === "paper" || userInput === "scissor") {
             return userInput;
+
         } else {
-            /*userInput = prompt("Invalid choice. Please enter 'rock', 'paper', or 'scissors':").toLowerCase(); */
+           userInput = prompt("Invalid choice. Please enter 'rock', 'paper', or 'scissor':");
         }
     }
+  
 }
 
-let humanScore =0;
+
+
+function playGame (){
+  let humanScore =0;
 let computerScore = 0;
 
-function playGame(humanChoice,computerChoice){
-
-if(humanChoice === computerChoice){
+function playRound(humanChoice, computerChoice) {
+  
+  if(humanChoice === computerChoice){
     return "its atie";
 } 
-    else if (computerChoice === 'paper' && humanChoice === 'rock'){
-      computerScore++;
-      return "You loose,paper beats rock";
+    else if( (computerChoice === 'paper' && humanChoice === 'rock') 
+      || (computerChoice === 'scissor' && humanChoice === 'paper')
+       || (computerChoice === 'rock' && humanChoice === 'scissor')){
+
+        computerScore++
+      return `you lose,${computerChoice} beats ${humanChoice}`;
     
-       
     }
-    else if (computerChoice === 'paper' && humanChoice === 'scissor'){
-      humanScore++;
-        return "You win,scissor beats rock";
+     else
       
-  
-      }
-      else if (computerChoice === 'scissor' && humanChoice === 'paper'){
-        computerScore++;
-        return "you lose,scissor beats rock";
-      
-      }
-
-      else if (computerChoice === 'scissor' && humanChoice === 'rock'){
-        humanScore++;
-        return " you win,scissor beats rock" ;
-       
-  
-      }
-      else if (computerChoice === 'rock' && humanChoice === 'paper'){
-        humanScore++;
-        return "you win,paper beats rock";
-      
-  
-      }
-
-      else if (computerChoice === 'rock' && humanChoice === 'scissor'){
-        computerScore++;
-        return "you lose,scissor beats rock";
-     
-  
-      } else
-      
-      { return "Error occured";
+      { 
+         humanScore++;
+      return `you win,${computerChoice} beats ${humanChoice}`; 
 
       }
-     
+
 }
 
-console.log(playGame(getHumanChoice(), getComputerChoice ()));
+for(let i =0; i<5; i++){
+  const humanSelection = getHumanChoice();
+  const computerSelection = getComputerChoice();
 
-console.log(`computerScore:${computerScore}, YOU:${humanScore}`);
+  console.log(playRound(humanSelection, computerSelection));
+  }
+  console.log(`computerScore:${computerScore},You:${humanScore}`);
+if(humanScore>computerScore){
+  console.log("you win the game");
+}
+
+else if (computerScore>humanScore){
+
+  console.log("You loose the game");
+}
+else {
+  console.log("its atie game");
+}
+
+
+}
+console.log(playGame());
 
 
 
